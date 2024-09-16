@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} Spark | Search Music {% endblock title %}
+
+
+{% block links %}
+<link rel="stylesheet" href="{% static 'css/search.css' %}">
+{% endblock links %}
+
+
+{% block style %}
+<style>
+    header {
+        padding: 30px 100px;
+    }
+
+    .search-wrapper a img {
+        height: 30px;
+        width: 30px;
+        margin-right: 5px;
+    }
+
+    .logo-wrapper {
+        display: flex;
+        align-items: center;
+    }
+</style>
+{% endblock style %}
+
+
+{% block header %}
+<header>
+    <div class="search-wrapper">
+        <a href="{% url 'landing' %}">
+            <div class="logo-wrapper">
+                <img src="/static/assets/images/logo.png">
+                <h2 class="logo">Spark.</h2>
+            </div>
+        </a>
+    </div>
+    <form action="" method="get" role="search" id="searchform">
+        <div class="wrap">
+            <div class="search">
+                <input type="text" class="searchTerm" value="{{ request.GET.q }}" name="q"
+                    placeholder="Search songs, artists & podcasts you love!">
+                <button type="submit" class="searchButton">
+                    <i class="fa fa-search"></i>
+                </button>
+            </div>
+        </div>
+    </form>
+</header>
+{% endblock header %}
+
+
+{% block body %}
+<div class="results">
+    <h3>Search Results for "{{ request.GET.q }}"</h3>
+</div>
+
+{% if search_results %}
+{% for result in search_results %}
+<a href="{% url 'details' result.id %}">
+    <div class="container">
+        <div class="ok">
+            <img src="{{ result.song_thumbnail.url }}">
+        </div>
+        <div class="song_name">
+            <h4>{{ result.name }}</h4>
+            <p> Song . {{ result.artists }}</p>
+        </div>
+    </div>
+</a>
+{% endfor %}
+{% endif %}
+
+{% endblock body %}

@@ -1,0 +1,114 @@
+.search {
+    width: 100%;
+    position: relative;
+    display: flex;
+}
+
+.searchTerm {
+    width: 100%;
+    border: 1px solid #919595;
+    border-right: none;
+    padding: 5px;
+    height: 50px;
+    border-radius: 5px 0 0 5px;
+    outline: none;
+    color: #9DBFAF;
+}
+
+.searchTerm:focus {
+    color: #00B4CC;
+}
+
+.searchButton {
+    width: 40px;
+    height: 50px;
+    border: 1px solid #454646;
+    background: #414242;
+    text-align: center;
+    color: #fff;
+    border-radius: 0 5px 5px 0;
+    cursor: pointer;
+    font-size: 20px;
+}
+
+.wrap {
+    width: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.search input {
+    background-color: black;
+    float: left;
+    padding-left: 30px;
+    font-size: 17px;
+    color: #fff;
+}
+
+.results {
+    color: #00B4CC;
+    padding-top: 128px;
+    padding-left: 386px;
+    border-bottom: solid #444 1px;
+    padding-bottom: 14px;
+}
+
+.results h3 {
+    font-size: 23px;
+}
+
+img {
+    border-radius: 30px;
+}
+
+li {
+    list-style: none;
+}
+
+li img {
+    width: 80px;
+    height: 80px;
+}
+
+ul {
+    float: left;
+}
+
+.container {
+    display: flex;
+    display: flex;
+    margin-left: 380px;
+    margin-right: 380px;
+    margin-top: 15px;
+    margin-bottom: 5px;
+    border-bottom: 50%;
+    border-bottom: solid #444 1px;
+    padding-bottom: 12px;
+}
+
+.ok {
+    height: 70px;
+}
+
+.ok img {
+    width: 112px;
+    height: 70px;
+    object-fit: contain;
+}
+
+.song_name {
+    margin-left: 50px;
+    margin-top: 8px;
+    color: #fff;
+}
+
+.song_name p {
+    font-weight: 500;
+    font-size: 14px;
+}
+
+a {
+    text-decoration: none;
+}

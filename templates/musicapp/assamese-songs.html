@@ -1,0 +1,166 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} Spark | English Songs {% endblock title %}
+
+{% block style %}
+<style>
+    .container {
+        margin-bottom: 25px;
+    }
+
+    .mymusic-wrapper {
+        padding-top: 85px;
+        margin: 0px 100px;
+    }
+
+    .music {
+        border-bottom: solid #444 2px;
+    }
+
+    .music h3 {
+        color: #fff;
+        font-size: 30px;
+        padding: 10px 0;
+    }
+
+    .ok {
+        color: #fff;
+        margin: 10px 0px;
+    }
+
+    .heart {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+
+    .playlist-wrapper {
+        margin: 8px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .playlist-wrapper img {
+        height: 170px;
+        margin-bottom: 10px;
+    }
+
+    .playlist_name {
+        font-size: 15px;
+        font-weight: 500;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        width: 150px;
+        white-space: nowrap;
+    }
+
+    .gallery-cell {
+        position: relative;
+        width: 150px;
+        height: 200px;
+        margin-right: 15px;
+        /*   border: solid black 2px; */
+        border-radius: 7px;
+        margin-bottom: 15px;
+    }
+
+    .gallery-cell img {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 7px;
+    }
+
+    .gallery-cell .overlay {
+        position: absolute;
+        display: none;
+        height: 100%;
+        width: 100%;
+        align-items: center;
+        border-radius: 7px;
+        background: linear-gradient(0deg, #0b0d0f, rgba(11, 13, 15, .35));
+    }
+
+    .gallery-cell .overlay .button-group-overlay {
+        display: flex;
+        flex-direction: row;
+        background: #111;
+    }
+
+    .gallery-cell:hover .overlay {
+        display: flex;
+        justify-content: center;
+    }
+
+    .gallery-cell .button-group {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+    }
+
+    .gallery-cell .button-group i {
+        font-size: 40px;
+        color: #fff;
+        margin: 10px;
+        cursor: pointer;
+    }
+
+    .playlist_name {
+        font-size: 15px;
+        font-weight: 500;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        width: 150px;
+        white-space: nowrap;
+    }
+
+    .playlist_desc {
+        font-size: 12px;
+        color: #888;
+        font-weight: 600;
+    }
+
+    .button-group button {
+  background: none;
+  border: none;
+}
+</style>
+{% endblock style %}
+
+{% block body %}
+
+<section class="mymusic-wrapper">
+    <div class="music">
+        <h3>Assamese Songs</h3>
+    </div>
+    <div class="container">
+        <div class="ok">
+            <div class="heart">
+                {% for song in assamese_songs %}
+                <div class="playlist-wrapper">
+                    <div class="gallery-cell">
+                        <img src="{{ song.song_thumbnail.url }}">
+                        <div class="overlay">
+                            <div class="button-group">
+                                <form action="" method="post">
+                                    {% csrf_token %}
+                                    <button type="submit" name="play" value="{{ song.id }}">
+                                        <i class="fas fa-play-circle"></i>
+                                    </button>
+                                </form>
+                                <a href="{% url 'details' song.id %}"><i class="fas fa-info-circle"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="playlist_name">{{ song.name }}</div>
+                    <div class="playlist_desc">{{ song.album }}</div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock body %}

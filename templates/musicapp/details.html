@@ -1,0 +1,463 @@
+{% extends 'base.html' %}
+
+{% block title %} Spark | Details {% endblock title %}
+
+{% block style %}
+<style>
+    .container {
+        display: flex;
+        padding-top: 110px;
+        margin-left: 170px;
+    }
+
+    .container.hide {
+        display: none;
+    }
+
+    .photo img {
+        height: 275px;
+        width: 220px;
+        border-radius: 20px;
+    }
+
+    .para {
+        color: #fff;
+        margin-top: 23px;
+        margin-bottom: 8px;
+        font-size: 24px;
+        font-weight: 600;
+    }
+
+    .list {
+        display: flex;
+        margin-bottom: 10px;
+    }
+
+    .ok {
+        height: 70px;
+    }
+
+    .ok img {
+        width: 70px;
+        height: 70px;
+        object-fit: contain;
+        border-radius: 50px;
+    }
+
+    .song_name {
+        margin-left: 27px;
+        margin-top: 17px;
+    }
+
+    .song_name a {
+        font-weight: 500;
+        font-size: 14px;
+        color: #fff;
+        text-decoration: none;
+    }
+
+    .details {
+        padding-top: 25px;
+        margin-left: 60px;
+        color: #fff;
+    }
+
+    .details p {
+        font-size: 20px;
+        color: rgb(131, 130, 130);
+    }
+
+    .play-button {
+        padding: 10px;
+        border-radius: 30px;
+        color: white;
+        background: red;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        align-content: center;
+        cursor: pointer;
+    }
+
+    .play-button i {
+        font-size: 20px;
+        margin-right: 7px;
+        color: #fff;
+    }
+
+    .hello {
+        display: flex;
+        align-items: center;
+        margin-top: 57px;
+    }
+
+    .hello a {
+        text-decoration: none;
+    }
+
+    .fav {
+        display: flex;
+        height: 45px;
+        width: 45px;
+        margin-left: 30px;
+        border: solid #fff 3px;
+        border-radius: 50%;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        background: #111;
+    }
+
+    .fav i {
+        font-size: 25px;
+        color: #fff;
+    }
+
+    .playlist {
+        padding: 10px;
+        border-radius: 30px;
+        color: white;
+        background: #009e00;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        align-content: center;
+        margin-left: 417px;
+    }
+
+    .playlist i {
+        font-size: 20px;
+        margin-right: 7px;
+    }
+
+    .playlist-menu,
+    .playlist-create-new {
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        margin: auto;
+        position: absolute;
+        padding: 10px;
+        background: #222;
+        height: 450px;
+        width: 550px;
+        box-sizing: border-box;
+        border-radius: 20px;
+        transition: 0.5s;
+        visibility: hidden;
+        opacity: 0;
+    }
+
+    .playlist-menu.active,
+    .playlist-create-new.active {
+        visibility: visible;
+        opacity: 1;
+    }
+
+    .playlist-menu h3,
+    .playlist-create-new h3 {
+        width: 100%;
+        letter-spacing: 1px;
+        text-align: center;
+        font-size: 20px;
+        padding: 10px 0;
+        font-weight: 700;
+        color: #fff;
+        line-height: 1.2em;
+        text-transform: uppercase;
+    }
+
+    .playlist-menu .top-bar,
+    .playlist-create-new .top-bar {
+        display: flex;
+        align-items: center;
+        border-bottom: solid #777 1px;
+    }
+
+    .playlist-menu .top-bar i,
+    .playlist-create-new .top-bar i {
+        font-size: 20px;
+        color: #fff;
+        margin-right: 10px;
+        cursor: pointer;
+    }
+
+    .playlist-space {
+        height: 70%;
+        margin: 10px;
+        overflow-y: scroll;
+    }
+
+    /* Remove Scrollbar */
+    ::-webkit-scrollbar {
+        /* Remove scrollbar space */
+        width: 0;
+        /* Optional: just make scrollbar invisible */
+        background: transparent;
+    }
+
+    .playlist-space .playlist-button {
+        padding: 7px 0;
+        display: flex;
+        color: #fff;
+        align-items: center;
+        background: #222;
+        border: none;
+        transition: all 0.2s ease-in-out;
+        width: 100%;
+        font-size: 16px;
+        justify-content: space-between;
+        cursor: pointer;
+    }
+
+    .playlist-wrapper {
+        display: flex;
+        align-items: center;
+    }
+
+    .playlist-wrapper img {
+        margin-right: 10px;
+        height: 70px;
+        width: 70px;
+    }
+
+    .playlist-name {
+        text-align: left;
+    }
+
+    .playlist-name h4 {
+        font-weight: 500;
+        /* font-size: 16px; */
+    }
+
+    .playlist-name p {
+        color: #777;
+        font-size: 14px;
+    }
+
+    .playlist-menu .bottom-bar,
+    .playlist-create-new .bottom-bar {
+        display: flex;
+        align-items: center;
+        padding: 10px;
+        border-top: solid #777 1px;
+        justify-content: center;
+    }
+
+    .create-button {
+        color: #fff;
+        border: solid 2px;
+        padding: 10px;
+        border-radius: 30px;
+        cursor: pointer;
+    }
+
+    .create-button:hover {
+        background: #666;
+    }
+
+    .playlist-create-new {
+        height: min-content;
+        width: 500px;
+    }
+
+    .playlist-create-new .bottom-bar {
+        justify-content: flex-end;
+    }
+
+    .cancel-button {
+        padding: 8px 10px;
+        border: solid #fff 2px;
+        border-radius: 30px;
+        color: #fff;
+        margin-right: 15px;
+        cursor: pointer;
+    }
+
+    .cancel-button:hover {
+        background: #666;
+    }
+
+    .save-button {
+        color: #fff;
+        border: solid #fff 2px;
+        padding: 8px 15px;
+        border-radius: 30px;
+        background: #222;
+        cursor: pointer;
+        font-size: 16px;
+    }
+
+    .save-button:hover {
+        background: red;
+        border: solid red 2px;
+    }
+
+    input.enter-playlist {
+        width: 100%;
+        margin: 20px 0;
+        padding: 10px;
+        border-radius: 10px;
+        background: #111;
+        border: solid #111 2px;
+        color: #fff;
+    }
+
+    .playlist {
+        cursor: pointer;
+    }
+</style>
+
+{% endblock style %}
+
+{% block body %}
+<div class="container">
+    <div class="photo_artists">
+        <div class="photo">
+            <img src="{{ song.song_thumbnail.url }}">
+        </div>
+        <div class="para">Artists</div>
+
+        <div class="artists">
+            {% for artist in artists %}
+            <div class="list">
+                <div class="ok">
+                    <img
+                        src="/static/assets/images/artist.png">
+                </div>
+                <div class="song_name">
+                    <a href="">{{ artist }}</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="details">
+        <h1 style="font-weight: 500; font-size:40px">{{ song.name }}</h1>
+        <p>{{ song.album }}</p>
+        <p>{{ song.release_date }}</p>
+        <div class="hello">
+            <form action="" method="post">
+                {% csrf_token %}
+                <button class="play-button" name="play-song" type="submit">
+                    <i class="fas fa-play"></i>
+                    Play Now
+                </button>
+            </form>
+            <form action="" method="post">
+                {% csrf_token %}
+                {% if is_favourite %}
+                <button class="fav" name="rm-fav" type="submit">
+                    <i class="fas fa-heart" style="color: red;"></i>
+                </button>
+                {% else %}
+                <button class="fav" name="add-fav" type="submit">
+                    <i class="far fa-heart"></i>
+                </button>
+                {% endif %}
+            </form>
+            <div class="playlist" onclick="playlistToggle()">
+                <i class="fas fa-plus-circle"></i>
+                Add to playlist
+            </div>
+        </div>
+    </div>
+</div>
+<div class="playlist-menu">
+    <div class="top-bar">
+        <h3>Add to Playlist</h3>
+        <i class="fas fa-times-circle" onclick="closeToggle()"></i>
+    </div>
+
+    <ul class="playlist-space">
+        <form action="" method="post">
+            {% csrf_token %}
+            <button class="playlist-button" type="submit" name="add-fav">
+                <div class="playlist-wrapper">
+                    <img src="https://img.wynk.in/unsafe/220x220/filters:no_upscale():format(webp)/https://wynk-music-cms.s3.ap-south-1.amazonaws.com/like_playlist/Round@3x.png"
+                        alt="Playlist Image">
+                    <div class="playlist-name">
+                        <h4>Liked Songs</h4>
+                        <p>1</p>
+                    </div>
+                </div>
+                <i class="fas fa-plus"></i>
+            </button>
+        </form>
+
+        {% if playlists %}
+        {% for playlist in playlists %}
+        <form action="" method="post">
+            {% csrf_token %}
+            <button class="playlist-button" type="submit" name="playlist" value="{{ playlist.playlist }}">
+                <div class="playlist-wrapper">
+                    <img src="/static/assets/images/playlist.png"
+                        alt="Playlist Image">
+                    <div class="playlist-name">
+                        <h4>{{ playlist.playlist }}</h4>
+                    </div>
+                </div>
+                <i class="fas fa-plus"></i>
+            </button>
+        </form>
+        {% endfor %}
+        {% endif %}
+    </ul>
+
+    <div class="bottom-bar">
+        <div class="create-button" onclick="createToggle()">
+            <i class="fas fa-plus"></i>
+            Create New
+        </div>
+    </div>
+</div>
+
+<form action="" method="post">
+    {% csrf_token %}
+    <div class="playlist-create-new">
+        <div class="top-bar">
+            <h3>Create New Playlist</h3>
+            <i class="fas fa-times-circle" onclick="closeToggle()"></i>
+        </div>
+        <input type="text" class="enter-playlist" value="" name="playlist" placeholder="Enter Playlist Name">
+        <div class="bottom-bar">
+            <div class="cancel-button" onclick="closeToggle()">
+                Cancel
+            </div>
+            <button type="submit" class="save-button" name="create-playlist">
+                Save
+            </button>
+        </div>
+    </div>
+</form>
+
+{% endblock body %}
+
+{% block scripts %}
+<script>
+    function playlistToggle() {
+        const toggleSelect = document.querySelector('.playlist-menu');
+        toggleSelect.classList.toggle('active');
+        const containerSelect = document.querySelector('.container');
+        containerSelect.classList.toggle('hide');
+    }
+
+    function closeToggle() {
+        const toggleSelect = document.querySelector('.playlist-menu');
+        toggleSelect.classList.remove('active');
+        const containerSelect = document.querySelector('.container');
+        containerSelect.classList.remove('hide');
+        const createSelect = document.querySelector('.playlist-create-new');
+        createSelect.classList.remove('active');
+    }
+
+    function createToggle() {
+        const createSelect = document.querySelector('.playlist-create-new');
+        createSelect.classList.toggle('active');
+        const toggleSelect = document.querySelector('.playlist-menu');
+        toggleSelect.classList.remove('active');
+    }
+</script>
+{% endblock scripts %}

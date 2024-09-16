@@ -1,0 +1,254 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} Spark | My Music {% endblock title %}
+
+
+{% block style %}
+<style>
+    .container {
+        margin-bottom: 25px;
+    }
+
+    .mymusic-wrapper {
+        padding-top: 85px;
+        margin: 0px 100px;
+    }
+
+    .music {
+        border-bottom: solid #444 2px;
+    }
+
+    .music h3 {
+        color: #fff;
+        font-size: 30px;
+        padding: 10px 0;
+    }
+
+    .ok {
+        color: #fff;
+        margin: 20px 0px;
+    }
+
+    .ok p {
+        font-size: 26px;
+        margin: 15px 0;
+        font-weight: 500;
+    }
+
+    .heart {
+        display: flex;
+        align-items: center;
+    }
+
+    .my-playlist {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .my-playlist .see-all-button {
+        color: #fff;
+        font-size: 14px;
+        border: solid #fff;
+        padding: 3px 10px;
+        border-radius: 20px;
+        cursor: pointer;
+    }
+
+    .my-playlist .see-all-button:hover {
+        background: #fff;
+        color: #111;
+    }
+
+    .playlist-wrapper {
+        margin-right: 20px;
+        display: flex;
+        flex-direction: column;
+        color: #fff;
+    }
+
+    .playlist-wrapper img {
+        height: 170px;
+        margin-bottom: 10px;
+    }
+
+    .gallery-cell {
+        position: relative;
+        width: 150px;
+        height: 200px;
+        margin-right: 15px;
+        /*   border: solid black 2px; */
+        border-radius: 7px;
+        margin-bottom: 15px;
+    }
+
+    .gallery-cell img {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 7px;
+    }
+
+    .gallery-cell .overlay {
+        position: absolute;
+        display: none;
+        height: 100%;
+        width: 100%;
+        align-items: center;
+        border-radius: 7px;
+        background: linear-gradient(0deg, #0b0d0f, rgba(11, 13, 15, .35));
+    }
+
+    .gallery-cell .overlay .button-group-overlay {
+        display: flex;
+        flex-direction: row;
+        background: #111;
+    }
+
+    .gallery-cell:hover .overlay {
+        display: flex;
+        justify-content: center;
+    }
+
+    .gallery-cell .button-group {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+    }
+
+    .gallery-cell .button-group i {
+        font-size: 40px;
+        color: #fff;
+        margin: 10px;
+        cursor: pointer;
+    }
+
+    .playlist_name {
+        font-size: 15px;
+        font-weight: 500;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        width: 150px;
+        white-space: nowrap;
+    }
+
+    .playlist_desc {
+        font-size: 12px;
+        color: #888;
+        font-weight: 600;
+    }
+
+    .button-group button {
+        background: none;
+        border: none;
+    }
+</style>
+{% endblock style %}
+
+{% block body %}
+<section class="mymusic-wrapper">
+    <div class="music">
+        <h3>My Music</h3>
+    </div>
+    <div class="container">
+        <div class="ok">
+            <div class="my-playlist">
+                <p>My Playlists</p>
+                <a href="{% url 'my-playlists' %}">
+                    <div class="see-all-button">See All</div>
+                </a>
+            </div>
+            <div class="heart">
+                <a href="{% url 'liked-songs' %}">
+                    <div class="playlist-wrapper">
+                        <img alt="Liked Songs" srcset
+                            src="https://img.wynk.in/unsafe/220x220/filters:no_upscale():format(webp)/https://wynk-music-cms.s3.ap-south-1.amazonaws.com/like_playlist/Round%403x.png">
+                        <div class="playlist_name">Liked Songs</div>
+                    </div>
+                </a>
+                {% for playlist in playlists %}
+                <a href="{% url 'playlist' playlist.playlist %}">
+                    <div class="playlist-wrapper">
+                        <img alt="{{ playlist.playlist }}" srcset src="/static/assets/images/playlist.png">
+                        <div class="playlist_name">{{ playlist.playlist }}</div>
+                    </div>
+                </a>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    {% if fav_songs %}
+    <div class="container">
+        <div class="ok">
+            <div class="my-playlist">
+                <p>Liked Songs</p>
+                <a href="{% url 'liked-songs' %}">
+                    <div class="see-all-button">See All</div>
+                </a>
+            </div>
+            <div class="heart">
+                {% for fav_song in fav_songs %}
+                <div class="playlist-wrapper">
+                    <div class="gallery-cell">
+                        <img src="{{ fav_song.song_thumbnail.url }}">
+                        <div class="overlay">
+                            <div class="button-group">
+                                <form action="" method="post">
+                                    {% csrf_token %}
+                                    <button type="submit" name="play" value="{{ fav_song.id }}">
+                                        <i class="fas fa-play-circle"></i>
+                                    </button>
+                                </form>
+                                <a href="{% url 'details' fav_song.id %}"><i class="fas fa-info-circle"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="playlist_name">{{ fav_song.name }}</div>
+                    <div class="playlist_desc">{{ fav_song.album }}</div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    {% if recent_songs %}
+    <div class="container">
+        <div class="ok">
+            <div class="my-playlist">
+                <p>Recently Played</p>
+                <a href="{% url 'recently-played' %}">
+                    <div class="see-all-button">See All</div>
+                </a>
+            </div>
+            <div class="heart">
+                {% for song in recent_songs %}
+                <div class="playlist-wrapper">
+                    <div class="gallery-cell">
+                        <img src="{{ song.song_thumbnail.url }}">
+                        <div class="overlay">
+                            <div class="button-group">
+                                <form action="" method="post">
+                                    {% csrf_token %}
+                                    <button type="submit" name="play" value="{{ song.id }}">
+                                        <i class="fas fa-play-circle"></i>
+                                    </button>
+                                </form>
+                                <a href="{% url 'details' song.id %}"><i class="fas fa-info-circle"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="playlist_name">{{ song.name }}</div>
+                    <div class="playlist_desc">{{ song.album }}</div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+</section>
+{% endblock body %}

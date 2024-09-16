@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} Spark | My Playlists {% endblock title %}
+
+{% block style %}
+<style>
+    .container {
+        margin-bottom: 25px;
+    }
+
+    .mymusic-wrapper {
+        padding-top: 85px;
+        margin: 0px 100px;
+    }
+
+    .music {
+        border-bottom: solid #444 2px;
+    }
+
+    .music h3 {
+        color: #fff;
+        font-size: 30px;
+        padding: 10px 0;
+    }
+
+    .ok {
+        color: #fff;
+        margin: 10px 0px;
+    }
+
+    .heart {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+
+    .playlist-wrapper {
+        margin: 20px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .playlist-wrapper img {
+        height: 170px;
+        margin-bottom: 10px;
+    }
+
+    .playlist_name {
+        font-size: 15px;
+        color: #fff;
+        font-weight: 500;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        width: 150px;
+        white-space: nowrap;
+    }
+</style>
+{% endblock style %}
+
+{% block body %}
+
+<section class="mymusic-wrapper">
+    <div class="music">
+        <h3>My Playlists</h3>
+    </div>
+    <div class="container">
+        <div class="ok">
+            <div class="heart">
+                <a href="{% url 'liked-songs' %}">
+                    <div class="playlist-wrapper">
+                        <img alt="Liked Songs"
+                            src="https://img.wynk.in/unsafe/220x220/filters:no_upscale():format(webp)/https://wynk-music-cms.s3.ap-south-1.amazonaws.com/like_playlist/Round%403x.png">
+                        <div class="playlist_name">Liked Songs</div>
+                    </div>
+                </a>
+                {% for playlist in playlists %}
+                <a href="{% url 'playlist' playlist.playlist %}">
+                    <div class="playlist-wrapper">
+                        <img alt="{{ playlist.playlist }}" srcset src="/static/assets/images/playlist.png">
+                        <div class="playlist_name">{{ playlist.playlist }}</div>
+                    </div>
+                </a>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock body %}

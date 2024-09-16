@@ -1,0 +1,6 @@
+# Ignore the virtual environment
+venve/
+myenv/
+test.py/
+# Ignore node_modules (if using Node.js)
+node_modules/

@@ -1,0 +1,256 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block title %} Spark | Explore {% endblock title %}
+
+
+{% block links %}
+<!-- Image Carousels (Flickity) -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flickity/3.0.0/flickity.min.css"
+	integrity="sha512-fJcFDOQo2+/Ke365m0NMCZt5uGYEWSxth3wg2i0dXu7A1jQfz9T4hdzz6nkzwmJdOdkcS8jmy2lWGaRXl+nFMQ=="
+	crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+<!-- Styling CSS -->
+<link rel="stylesheet" href="{% static 'css/explore.css' %}">
+{% endblock links %}
+
+
+{% block body %}
+<section class="banner-wrapper">
+	<div class="gallery" data-flickity='{ "wrapAround": true, "autoPlay": true }'>
+		<div class="banner-gallery-cell">
+			<img src="/static/assets/images/banner/1.jpg" alt="banner_1">
+		</div>
+		<div class="banner-gallery-cell">
+			<img src="/static/assets/images/banner/2.jpg" alt="banner_2">
+		</div>
+		<div class="banner-gallery-cell">
+			<img src="/static/assets/images/banner/3.jpg" alt="banner_3">
+		</div>
+		<div class="banner-gallery-cell">
+			<img src="/static/assets/images/banner/4.jpg" alt="banner_4">
+		</div>
+		<div class="banner-gallery-cell">
+			<img src="/static/assets/images/banner/5.jpg" alt="banner_5">
+		</div>
+	</div>
+</section>
+
+<section class="explore-wrapper">
+
+	<!-- {% if recent_songs %}
+	<div class="text-wrapper">
+		<div class="text">Recently Played</div>
+	</div>
+
+	<div class="gallery" data-flickity='{ "cellAlign": "left", "contain": true, "pageDots": false}'>
+		{% for song in recent_songs %}
+		<div class="gallery-cell">
+			<img
+				src="{{ song.song_thumbnail.url }}">
+			<div class="overlay">
+				<div class="button-group">
+					<i class="fas fa-play-circle"></i>
+					<i class="fas fa-info-circle"></i>
+				</div>
+			</div>
+		</div>
+		{% endfor %}
+	</div>
+	{% endif %} -->
+
+
+	{% if all_songs %}
+	<div class="text-wrapper">
+		<div class="text">All Songs</div>
+		<a href="{% url 'all-songs' %}"><div class="more-button">More</div></a>
+	</div>
+
+	<div class="gallery" data-flickity='{ "cellAlign": "left", "contain": true, "pageDots": false, "draggable": false}'>
+
+		{% for song in all_songs %}
+		<div class="gallery-cell">
+			<img src="{{ song.song_thumbnail.url }}">
+			<div class="overlay">
+				<div class="button-group">
+					<form action="" method="post">
+						{% csrf_token %}
+						<button type="submit" name="play" value="{{ song.id }}">
+							<i class="fas fa-play-circle"></i>
+						</button>
+					</form>
+					<a href="{% url 'details' song.id %}"><i class="fas fa-info-circle"></i></a>
+				</div>
+			</div>
+		</div>
+		{% endfor %}
+	</div>
+	{% endif %}
+
+	{% if hindi_songs %}
+	<div class="text-wrapper">
+		<div class="text">Hindi Songs</div>
+		<a href="{% url 'hindi-songs' %}"><div class="more-button">More</div></a>
+	</div>
+
+	<div class="gallery" data-flickity='{ "cellAlign": "left", "contain": true, "pageDots": false}'>
+		{% for song in hindi_songs %}
+		<div class="gallery-cell">
+			<img src="{{ song.song_thumbnail.url }}">
+			<div class="overlay">
+				<div class="button-group">
+					<form action="" method="post">
+						{% csrf_token %}
+						<button type="submit" name="play" value="{{ song.id }}">
+							<i class="fas fa-play-circle"></i>
+						</button>
+					</form>
+					<a href="{% url 'details' song.id %}"><i class="fas fa-info-circle"></i></a>
+				</div>
+			</div>
+		</div>
+		{% endfor %}
+	</div>
+	{% endif %}
+
+	{% if punjabi_songs %}
+	<div class="text-wrapper">
+		<div class="text">Punjabi Songs</div>
+		<a href="{% url 'punjabi-songs' %}"><div class="more-button">More</div></a>
+	</div>
+
+	<div class="gallery" data-flickity='{ "cellAlign": "left", "contain": true, "pageDots": false}'>
+		{% for song in punjabi_songs %}
+		<div class="gallery-cell">
+			<img src="{{ song.song_thumbnail.url }}">
+			<div class="overlay">
+				<div class="button-group">
+					<form action="" method="post">
+						{% csrf_token %}
+						<button type="submit" name="play" value="{{ song.id }}">
+							<i class="fas fa-play-circle"></i>
+						</button>
+					</form>
+					<a href="{% url 'details' song.id %}"><i class="fas fa-info-circle"></i></a>
+				</div>
+			</div>
+		</div>
+		{% endfor %}
+	</div>
+	{% endif %}
+
+	{% if haryanvi_songs %}
+	<div class="text-wrapper">
+		<div class="text">Haryanvi Songs</div>
+		<a href="{% url 'haryanvi-songs' %}"><div class="more-button">More</div></a>
+	</div>
+
+	<div class="gallery" data-flickity='{ "cellAlign": "left", "contain": true, "pageDots": false}'>
+		{% for song in haryanvi_songs %}
+		<div class="gallery-cell">
+			<img src="{{ song.song_thumbnail.url }}">
+			<div class="overlay">
+				<div class="button-group">
+					<form action="" method="post">
+						{% csrf_token %}
+						<button type="submit" name="play" value="{{ song.id }}">
+							<i class="fas fa-play-circle"></i>
+						</button>
+					</form>
+					<a href="{% url 'details' song.id %}"><i class="fas fa-info-circle"></i></a>
+				</div>
+			</div>
+		</div>
+		{% endfor %}
+	</div>
+	{% endif %}
+
+	{% if assamese_songs %}
+	<div class="text-wrapper">
+		<div class="text">Assamese Songs</div>
+		<a href="{% url 'assamese-songs' %}"><div class="more-button">More</div></a>
+	</div>
+
+	<div class="gallery" data-flickity='{ "cellAlign": "left", "contain": true, "pageDots": false}'>
+		{% for song in assamese_songs %}
+		<div class="gallery-cell">
+			<img src="{{ song.song_thumbnail.url }}">
+			<div class="overlay">
+				<div class="button-group">
+					<form action="" method="post">
+						{% csrf_token %}
+						<button type="submit" name="play" value="{{ song.id }}">
+							<i class="fas fa-play-circle"></i>
+						</button>
+					</form>
+					<a href="{% url 'details' song.id %}"><i class="fas fa-info-circle"></i></a>
+				</div>
+			</div>
+		</div>
+		{% endfor %}
+	</div>
+	{% endif %}
+
+	{% if bhojpuri_songs %}
+	<div class="text-wrapper">
+		<div class="text">Bhojpuri Songs</div>
+		<a href="{% url 'bhojpuri-songs' %}"><div class="more-button">More</div></a>
+	</div>
+
+	<div class="gallery" data-flickity='{ "cellAlign": "left", "contain": true, "pageDots": false}'>
+		{% for song in bhojpuri_songs %}
+		<div class="gallery-cell">
+			<img src="{{ song.song_thumbnail.url }}">
+			<div class="overlay">
+				<div class="button-group">
+					<form action="" method="post">
+						{% csrf_token %}
+						<button type="submit" name="play" value="{{ song.id }}">
+							<i class="fas fa-play-circle"></i>
+						</button>
+					</form>
+					<a href="{% url 'details' song.id %}"><i class="fas fa-info-circle"></i></a>
+				</div>
+			</div>
+		</div>
+		{% endfor %}
+	</div>
+	{% endif %}
+
+	{% if english_songs %}
+	<div class="text-wrapper">
+		<div class="text">English Songs</div>
+		<a href="{% url 'english-songs' %}"><div class="more-button">More</div></a>
+	</div>
+
+	<div class="gallery" data-flickity='{ "cellAlign": "left", "contain": true, "pageDots": false}'>
+		{% for song in english_songs %}
+		<div class="gallery-cell">
+			<img src="{{ song.song_thumbnail.url }}">
+			<div class="overlay">
+				<div class="button-group">
+					<form action="" method="post">
+						{% csrf_token %}
+						<button type="submit" name="play" value="{{ song.id }}">
+							<i class="fas fa-play-circle"></i>
+						</button>
+					</form>
+					<a href="{% url 'details' song.id %}"><i class="fas fa-info-circle"></i></a>
+				</div>
+			</div>
+		</div>
+		{% endfor %}
+	</div>
+	{% endif %}4
+
+</section>
+{% endblock body %}
+
+
+{% block scripts %}
+<!-- Image Carousels JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/flickity/3.0.0/flickity.pkgd.min.js"
+	integrity="sha512-achKCfKcYJg0u0J7UDJZbtrffUwtTLQMFSn28bDJ1Xl9DWkl/6VDT3LMfVTo09V51hmnjrrOTbtg4rEgg0QArA=="
+	crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+{% endblock scripts %}

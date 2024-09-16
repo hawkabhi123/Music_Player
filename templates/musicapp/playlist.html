@@ -1,0 +1,138 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block style %}
+<style>
+    .container {
+        display: flex;
+        padding-top: 110px;
+        margin: 0px 170px;
+    }
+
+    .playlist-image img {
+        height: 250px;
+        width: 220px;
+        object-fit: contain;
+        border-radius: 20px;
+    }
+
+    .right-container {
+        padding-top: 25px;
+        margin: 0px 50px;
+        width: 100%;
+        color: #fff;
+    }
+
+    .right-container h1 {
+        font-size: 40px;
+        font-weight: 500;
+    }
+
+    .right-container p {
+        font-size: 18px;
+        color: #666;
+    }
+
+    .song-card-wrapper {
+        margin-top: 100px;
+    }
+
+    .song-card {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 20px;
+        margin: 10px;
+    }
+
+    .song-wrapper {
+        display: flex;
+        cursor: pointer;
+    }
+
+    .song-img {
+        height: 50px;
+        width: 50px;
+    }
+
+    .song-img img {
+        object-fit: contain;
+    }
+
+    .song-desc-wrapper {
+        margin: 0px 20px;
+        color: #fff;
+    }
+
+    .song-name {
+        font-size: 16px;
+        font-weight: 600;
+    }
+
+    .song-album {
+        font-size: 14px;
+        font-weight: 400;
+    }
+
+    .song-card:hover {
+    /* border: solid #777 1px; */
+    background: #333;
+    border-radius: 20px;
+}
+
+.song-card .fav {
+    cursor: pointer;
+    background: none;
+    color: #fff;
+    border: none;
+}
+
+.song-card .fav:hover {
+    color: rgb(200, 0, 0);
+}
+</style>
+{% endblock style %}
+
+{% block body %}
+<div class="container">
+    <div class="left-image-container">
+        <div class="playlist-image">
+            <img
+                src="/static/assets/images/playlist.png">
+        </div>
+    </div>
+    <div class="right-container">
+        <h1>{{ playlist_name }}</h1>
+        <p>By {{ request.user }}</p>
+        {% if playlist_count == 1 %}
+        <p>{{ playlist_count }} Song</p>
+        {% else %}
+        <p>{{ playlist_count }} Songs</p>
+        {% endif %}
+        <div class="song-card-wrapper">
+            {% for song in playlist_songs %}
+            <div class="song-card">
+                <a href="{% url 'details' song.id %}">
+                    <div class="song-wrapper">
+                        <div class="song-img">
+                            <img src="{{ song.song_thumbnail.url }}"
+                                alt="Song Thumbnail">
+                        </div>
+                        <div class="song-desc-wrapper">
+                            <div class="song-name">{{ song.name }}</div>
+                            <div class="song-album">{{ song.artists }} - {{ song.album }}</div>
+                        </div>
+                    </div>
+                </a>
+                <form action="" method="post">
+                    {% csrf_token %}
+                    <button class="fav" name="rm-playlist" type="submit" value="{{ song.id }}">
+                        <i class="fas fa-trash-alt"></i>
+                    </button>
+                </form>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock body %}

@@ -1,0 +1,154 @@
+*:focus {
+  display: none;
+}
+
+.gallery {
+  background: #111;
+  margin-bottom: 15px;
+}
+
+.banner-gallery-cell {
+  width: 800px;
+  height: 320px;
+  margin-right: 10px;
+  /* background: #8C8; */
+  /* border: solid black 2px; */
+  border-radius: 7px;
+}
+
+.gallery-cell {
+  width: 150px;
+  height: 200px;
+  margin-right: 12px;
+  /*   border: solid black 2px; */
+  border-radius: 7px;
+}
+
+.gallery-cell img {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 7px;
+}
+
+.gallery-cell .overlay {
+  position: absolute;
+  display: none;
+  height: 100%;
+  width: 100%;
+  align-items: center;
+  border-radius: 7px;
+  background: linear-gradient(0deg, #0b0d0f, rgba(11, 13, 15, .35));
+}
+
+.gallery-cell .overlay .button-group-overlay {
+  display: flex;
+  flex-direction: row;
+  background: #111;
+}
+
+.gallery-cell:hover .overlay {
+  display: flex;
+  justify-content: center;
+}
+
+.gallery-cell .button-group {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.button-group button {
+  background: none;
+  border: none;
+}
+
+.gallery-cell .button-group i {
+  font-size: 40px;
+  color: #fff;
+  padding: 10px;
+  cursor: pointer;
+}
+
+/* position dots up a bit */
+.flickity-page-dots {
+  bottom: -22px;
+}
+
+/* dots are lines */
+.flickity-page-dot {
+  height: 4px;
+  width: 40px;
+  margin: 0;
+  border-radius: 0;
+  background: #fff;
+}
+
+/* hide disabled button */
+.flickity-button:disabled {
+  display: none;
+}
+
+/* smaller, dark, rounded square */
+.flickity-button {
+  background: #333;
+}
+
+.flickity-button:hover {
+  background: #555;
+}
+
+.flickity-prev-next-button {
+  width: 30px;
+  height: 30px;
+  border-radius: 5px;
+}
+
+/* icon color */
+.flickity-button-icon {
+  fill: white;
+}
+
+/* remove blue highlight */
+.flickity-enabled:focus {
+  outline: none;
+}
+
+.banner-wrapper {
+  padding-top: 85px;
+}
+
+.explore-wrapper {
+  padding: 10px 110px;
+}
+
+.text-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: solid #444 2px;
+  padding: 10px 0;
+  margin: 15px 0px;
+}
+
+.text-wrapper .text {
+  font-size: 22px;
+  color: #fff;
+  font-weight: 500;
+}
+
+.text-wrapper .more-button {
+  color: #fff;
+  font-size: 14px;
+  border: solid #fff;
+  padding: 3px 10px;
+  border-radius: 20px;
+  cursor: pointer;
+}
+
+.text-wrapper .more-button:hover {
+  background: #fff;
+  color: #111;
+}
